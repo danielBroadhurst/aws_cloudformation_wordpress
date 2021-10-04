@@ -31,17 +31,17 @@ Resources:
         - Key: Name
           Value: WordPress-Stack
 
-  NatPublicIP:
-    Type: "AWS::EC2::EIP"
-    DependsOn: VPC
-    Properties:
-      Domain: vpc
-  NatGateway:
-    Type: "AWS::EC2::NatGateway"
-    DependsOn: NatPublicIP
-    Properties: 
-      AllocationId: !GetAtt NatPublicIP.AllocationId
-      SubnetId: !Ref SubnetPublic     
+  # NatPublicIP:
+  #   Type: "AWS::EC2::EIP"
+  #   DependsOn: VPC
+  #   Properties:
+  #     Domain: vpc
+  # NatGateway:
+  #   Type: "AWS::EC2::NatGateway"
+  #   DependsOn: NatPublicIP
+  #   Properties: 
+  #     AllocationId: !GetAtt NatPublicIP.AllocationId
+  #     SubnetId: !Ref SubnetPublic     
 
   InternetGateway:
     Type: 'AWS::EC2::InternetGateway'
@@ -91,26 +91,26 @@ Resources:
           Value: WordPress-Stack
         - Key: Network
           Value: Public
-  RouteTablePrivate:
-    Type: 'AWS::EC2::RouteTable'
-    Properties:
-      VpcId: !Ref VPC
-      Tags:
-        - Key: Name
-          Value: WordPress-Stack
-        - Key: Network
-          Value: Private
+  # RouteTablePrivate:
+  #   Type: 'AWS::EC2::RouteTable'
+  #   Properties:
+  #     VpcId: !Ref VPC
+  #     Tags:
+  #       - Key: Name
+  #         Value: WordPress-Stack
+  #       - Key: Network
+  #         Value: Private
   
   RouteTableAssociationPublic:
     Type: 'AWS::EC2::SubnetRouteTableAssociation'
     Properties:
       SubnetId: !Ref SubnetPublic
       RouteTableId: !Ref RouteTablePublic
-  RouteTableAssociationPrivate:
-    Type: 'AWS::EC2::SubnetRouteTableAssociation'
-    Properties:
-      SubnetId: !Ref SubnetPrivate
-      RouteTableId: !Ref PrivateRouteTable
+  # RouteTableAssociationPrivate:
+  #   Type: 'AWS::EC2::SubnetRouteTableAssociation'
+  #   Properties:
+  #     SubnetId: !Ref SubnetPrivate
+  #     RouteTableId: !Ref PrivateRouteTable
 
   RouteTablePublicInternetRoute:
     Type: 'AWS::EC2::Route'
@@ -119,12 +119,12 @@ Resources:
       RouteTableId: !Ref RouteTablePublic
       DestinationCidrBlock: '0.0.0.0/0'
       GatewayId: !Ref InternetGateway
-  RouteTablePrivateInternetRoute:
-    Type: 'AWS::EC2::Route'
-    Properties:
-      RouteTableId: !Ref PrivateRouteTable
-      DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref NatGateway
+  # RouteTablePrivateInternetRoute:
+  #   Type: 'AWS::EC2::Route'
+  #   Properties:
+  #     RouteTableId: !Ref PrivateRouteTable
+  #     DestinationCidrBlock: 0.0.0.0/0
+  #     NatGatewayId: !Ref NatGateway
 
   NetworkAclPublic:
     Type: 'AWS::EC2::NetworkAcl'
