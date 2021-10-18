@@ -201,7 +201,7 @@ Resources:
       DBName: !Ref DBName
       Engine: MySQL
       DBInstanceClass: db.t2.micro
-      BackupRetentionPeriod: 1
+      BackupRetentionPeriod: 0
       AllocatedStorage: 20
       MasterUsername: !Ref DBUser
       MasterUserPassword: '{{resolve:ssm-secure:wp-rds:1}}'
